@@ -2,6 +2,7 @@ package net.oskarstrom.seribench.core;
 
 import net.oskarstrom.seribench.core.objects.MainObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +25,22 @@ public class SerializerTest {
 			resultEntry.initOp = testOps(SECONDS, implementation::init);
 
 			print(i, size, implementation, "Encode");
-			resultEntry.encodeOp = testOps(SECONDS, () -> implementation.encode(mainObject));
+			resultEntry.encodeOp = testOps(SECONDS, () -> {
+				try {
+					implementation.encode(mainObject);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
 
 			print(i, size, implementation, "Decode");
-			resultEntry.decodeOp = testOps(SECONDS, () -> implementation.decode(mainObject));
+			resultEntry.decodeOp = testOps(SECONDS, () -> {
+				try {
+					implementation.decode(mainObject);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
 			resultEntry.div(SECONDS);
 			resultEntry.size = implementation.size();
 			results.add(resultEntry);

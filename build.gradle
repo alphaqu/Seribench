@@ -11,5 +11,5 @@ repositories {
 
 dependencies {
     implementation 'com.google.code.gson:gson:2.8.8'
-
+    implementation 'io.activej:activej-serializer:4.3.1'
 }
