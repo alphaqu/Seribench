@@ -35,6 +35,9 @@ public class Main {
 		final SerializerTest serializerTest = new SerializerTest(init.implementations);
 		System.out.println("Creating run object");
 		final MainObject mainObject = MainObject.createDefault(RANDOM);
+		//warmup
+		serializerTest.run(mainObject);
+		serializerTest.clear();
 		serializerTest.run(mainObject);
 		serializerTest.printResults();
 	}

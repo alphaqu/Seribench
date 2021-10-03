@@ -15,6 +15,10 @@ public class SerializerTest {
 		this.implementations = implementations;
 	}
 
+	public void clear() {
+		results.clear();
+	}
+
 	public void run(MainObject mainObject) {
 		final int size = implementations.size();
 		for (int i = 0; i < size; i++) {
@@ -63,15 +67,15 @@ public class SerializerTest {
 
 	public void printResults() {
 		System.out.print("Printing Results. \r");
-		StringBuilder sb = new StringBuilder("Name\tInit\tEncode\tDecode\tSize (kB)\n");
+		StringBuilder sb = new StringBuilder("Name\tEncode\tDecode\tInit\tSize (kB)\n");
 		for (ResultEntry result : results) {
 			final double decodeTime = result.decodeOp;
 			final double encodeTime = result.encodeOp;
 			final double initTime = result.initOp;
 			final float f = result.size / 1000f;
-			sb.append(result.name).append("\t").append(initTime).append("\t").append(encodeTime).append("\t").append(decodeTime).append("\t").append(f).append("\n");
+			sb.append(result.name).append("\t").append(encodeTime).append("\t").append(decodeTime).append("\t").append(initTime).append("\t").append(f).append("\n");
 		}
-		System.out.println(sb);
+		System.out.println(sb.toString().replace('.', ','));
 	}
 
 
