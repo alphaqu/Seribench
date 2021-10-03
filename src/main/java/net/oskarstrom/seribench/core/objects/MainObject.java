@@ -10,10 +10,10 @@ public class MainObject {
 	public MainObject() {
 	}
 
-	public static MainObject createDefault(Random random) {
+	public static MainObject createDefault(Random random, int size) {
 		MainObject object = new MainObject();
-		object.setPrimitiveObject(PrimitiveObject.createDefault(random));
-		object.setArrayObject(ArrayObject.createDefault(random));
+		object.setPrimitiveObject(PrimitiveObject.createDefault(random,size));
+		object.setArrayObject(ArrayObject.createDefault(random, size));
 		return object;
 	}
 

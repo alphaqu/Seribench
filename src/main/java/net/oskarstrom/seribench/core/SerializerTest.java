@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SerializerTest {
-	private static final float SECONDS = 1f;
+	private static final float SECONDS = 0.5f;
 	private final List<SerializerImpl> implementations;
 	private final List<ResultEntry> results = new ArrayList<>();
 
@@ -19,16 +19,22 @@ public class SerializerTest {
 		results.clear();
 	}
 
-	public void run(MainObject mainObject) {
+	public void run(TestType type, MainObject mainObject, boolean warmup) {
 		final int size = implementations.size();
+
 		for (int i = 0; i < size; i++) {
 			SerializerImpl implementation = implementations.get(i);
+			if (warmup)
+				System.out.print("Warming up " + type + "[" + i + "/" + size + "]" + "\r");
 			final ResultEntry resultEntry = new ResultEntry(implementation.getName());
 
-			print(i, size, implementation, "Init");
-			resultEntry.initOp = testOps(SECONDS, implementation::init);
+			if (!warmup)
+				print(type, i, size, implementation, "Init");
 
-			print(i, size, implementation, "Encode");
+			resultEntry.initOp = testOps(SECONDS, implementation::init);
+			if (!warmup)
+				print(type, i, size, implementation, "Encode");
+
 			resultEntry.encodeOp = testOps(SECONDS, () -> {
 				try {
 					implementation.encode(mainObject);
@@ -37,7 +43,8 @@ public class SerializerTest {
 				}
 			});
 
-			print(i, size, implementation, "Decode");
+			if (!warmup)
+				print(type, i, size, implementation, "Decode");
 			resultEntry.decodeOp = testOps(SECONDS, () -> {
 				try {
 					implementation.decode(mainObject);
@@ -51,8 +58,8 @@ public class SerializerTest {
 		}
 	}
 
-	public void print(int impl, int impls, SerializerImpl implementation, String task) {
-		System.out.print("[" + (impl + 1) + "/" + impls + "] -> (" + implementation.getName() + ") Benchmarking " + task + "\r");
+	public void print(TestType type, int impl, int impls, SerializerImpl implementation, String task) {
+		System.out.print(type + " [" + (impl + 1) + "/" + impls + "] -> (" + implementation.getName() + ") Benchmarking " + task + "\r");
 	}
 
 	public long testOps(float seconds, Runnable runnable) {
@@ -65,8 +72,9 @@ public class SerializerTest {
 		return op;
 	}
 
-	public void printResults() {
+	public void printResults(TestType type) {
 		System.out.print("Printing Results. \r");
+		System.out.println(type);
 		StringBuilder sb = new StringBuilder("Name\tEncode\tDecode\tInit\tSize (kB)\n");
 		for (ResultEntry result : results) {
 			final double decodeTime = result.decodeOp;

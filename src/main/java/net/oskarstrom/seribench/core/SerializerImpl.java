@@ -10,5 +10,6 @@ public interface SerializerImpl {
 	boolean decode(MainObject mainObject) throws IOException;
 	void reset();
 	int size();
+	TestType getType();
 	String getName();
 }

@@ -76,7 +76,7 @@ public class PrimitiveObject {
 		this.double4 = double4;
 	}
 
-	public static PrimitiveObject createDefault(Random random) {
+	public static PrimitiveObject createDefault(Random random, int size) {
 		final PrimitiveObject primitiveObject = new PrimitiveObject();
 		primitiveObject.setBoolean1(random.nextBoolean());
 		primitiveObject.setBoolean2(random.nextBoolean());

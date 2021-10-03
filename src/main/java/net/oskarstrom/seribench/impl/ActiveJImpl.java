@@ -6,6 +6,7 @@ import io.activej.serializer.stream.StreamInput;
 import io.activej.serializer.stream.StreamOutput;
 import net.oskarstrom.seribench.core.Main;
 import net.oskarstrom.seribench.core.SerializerImpl;
+import net.oskarstrom.seribench.core.TestType;
 import net.oskarstrom.seribench.core.objects.MainObject;
 
 import java.io.ByteArrayInputStream;
@@ -45,6 +46,11 @@ public class ActiveJImpl implements SerializerImpl {
 	@Override
 	public int size() {
 		return bytes.length;
+	}
+
+	@Override
+	public TestType getType() {
+		return TestType.BYTE;
 	}
 
 	@Override

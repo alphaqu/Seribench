@@ -3,7 +3,7 @@ package net.oskarstrom.seribench.core.objects;
 import java.util.*;
 
 public class ArrayObject {
-	private static final int SIZE = 2000;
+	private static final int SIZE = 20000;
 	public int[] integers;
 	public String[] strings;
 	public List<Long> longList;
@@ -20,29 +20,29 @@ public class ArrayObject {
 
 	}
 
-	public static ArrayObject createDefault(Random random) {
+	public static ArrayObject createDefault(Random random, int size) {
 		final ArrayObject arrayObject = new ArrayObject();
-		int[] integers = new int[SIZE];
-		for (int i = 0; i < SIZE; i++) {
+		int[] integers = new int[size];
+		for (int i = 0; i < size; i++) {
 			integers[i] = random.nextInt();
 		}
 		arrayObject.setIntegers(integers);
 
-		String[] strings = new String[SIZE];
-		for (int i = 0; i < SIZE; i++) {
+		String[] strings = new String[size];
+		for (int i = 0; i < size; i++) {
 			strings[i] = genString(random);
 		}
 		arrayObject.setStrings(strings);
 
-		List<Long> longList = new ArrayList<>(SIZE);
-		for (int i = 0; i < SIZE; i++) {
+		List<Long> longList = new ArrayList<>(size);
+		for (int i = 0; i < size; i++) {
 			longList.add(random.nextLong());
 		}
 		arrayObject.setLongList(longList);
 
 
 		Map<String, Float> map = new HashMap<>();
-		for (int i = 0; i < SIZE; i++) {
+		for (int i = 0; i < size; i++) {
 			map.put(genString(random), random.nextFloat());
 		}
 		arrayObject.setMap(map);
